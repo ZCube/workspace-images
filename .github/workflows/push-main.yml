@@ -183,13 +183,16 @@ jobs:
           COPY_JOBS_PIDS=""
           for IMAGE_TAG in $IMAGE_TAGS;
           do
-            sudo skopeo copy \
-              --src-tls-verify=false \
-              --registries-conf=.github/registries.conf \
-              docker://localhost:5000/workspace-base-images:$IMAGE_TAG \
-              docker://${{ env.IMAGE_REGISTRY }}/gitpod-artifacts/docker-dev/workspace-$IMAGE_TAG:${{ env.TIMESTAMP_TAG }} &
+              for TAG in ${{ env.TIMESTAMP_TAG }} "latest";
+              do
+                sudo skopeo copy \
+                  --src-tls-verify=false \
+                  --registries-conf=.github/registries.conf \
+                  docker://localhost:5000/workspace-base-images:$IMAGE_TAG \
+                  docker://${{ env.IMAGE_REGISTRY }}/gitpod-artifacts/docker-dev/workspace-$IMAGE_TAG:$TAG &
 
-              COPY_JOBS_PIDS="$COPY_JOBS_PIDS $!"
+                COPY_JOBS_PIDS="$COPY_JOBS_PIDS $!"
+              done
           done
 
           for COPY_JOBS_PID in $COPY_JOBS_PIDS; do
