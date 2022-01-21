@@ -1,9 +1,8 @@
-name: Build and Sync container images
+name: Build from Main
 
 on:
   push:
     branches:
-      - ws-team/dazzle-rewrite
       - master
 
 jobs:

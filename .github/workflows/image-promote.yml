@@ -1,10 +1,10 @@
-name: Sync workspace-full image tag from GAR to Dockerhub
+name: Sync to Dockerhub
 
 on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'worksapce-full image tag in GAR'
+        description: 'The tag to apply to the image'
         required: true
 
 jobs:
