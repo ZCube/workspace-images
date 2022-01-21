@@ -1,10 +1,11 @@
-name: Sync images from GAR to Dockerhub
+name: Sync workspace-full image tag from GAR to Dockerhub
 
 on:
-  push:
-    branches:
-      - ws-team/dazzle-rewrite
-      - master
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'worksapce-full image tag in GAR'
+        required: true
 
 jobs:
   # Sync container images between the GCP Artifact registry and Dockerhub
@@ -61,8 +62,10 @@ jobs:
           sudo skopeo login -u ${{env.docker_user}} --password=${{env.docker_password}} https://${{env.DEST_IMAGE_REGISTRY}}
 
       - name: 🐳 Sync images to Dockerhub
+        env:
+          IMAGE_TAG: ${{github.events.input.tag}}
         run: |
           sudo skopeo sync \
-            --src yaml \
+            --src docker \
             --dest docker \
-            .github/promote-images.yml  ${{env.DEST_IMAGE_REGISTRY}}/gitpod
+            ${{env.SOURCE_IMAGE_REGISTRY}}/gitpod-artifacts/docker-dev/workspace-full:$IMAGE_TAG ${{env.DEST_IMAGE_REGISTRY}}/gitpod
