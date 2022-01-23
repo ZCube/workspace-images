@@ -1,4 +1,4 @@
-name: Sync to Dockerhub
+name: Sync to Docker Hub
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ on:
         required: true
 
 jobs:
-  # Sync container images between the GCP Artifact registry and Dockerhub
+  # Sync container images between the GCP Artifact registry and Docker Hub
   # To implement manual approvals, the workflow uses an Environment.
   promote:
     runs-on: ubuntu-latest
@@ -54,14 +54,14 @@ jobs:
         run: |
           sudo skopeo login -u oauth2accesstoken --password=${{ steps.auth.outputs.access_token }} https://${{env.SOURCE_IMAGE_REGISTRY}}
 
-      - name: ✍🏽 Configuring Skopeo for Dockerhub
+      - name: ✍🏽 Configuring Skopeo for Docker Hub
         env:
           docker_user: ${{secrets.DOCKERHUB_USER_NAME}}
           docker_password: ${{secrets.DOCKERHUB_ACCESS_TOKEN}}
         run: |
           sudo skopeo login -u ${{env.docker_user}} --password=${{env.docker_password}} https://${{env.DEST_IMAGE_REGISTRY}}
 
-      - name: 🐳 Sync images to Dockerhub
+      - name: 🐳 Sync images to Docker Hub
         env:
           IMAGE_TAG: ${{github.events.input.tag}}
         run: |

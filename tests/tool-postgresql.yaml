@@ -4,3 +4,7 @@
   assert:
   - status == 0
   - stdout.indexOf("(PostgreSQL) 12") != -1
+- desc: it should find llvm.list
+  command: [ls,/workspace/.pgsql/data]
+  assert:
+  - status == 0

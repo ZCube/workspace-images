@@ -17,3 +17,5 @@ RUN curl -fsSL https://apt.llvm.org/llvm-snapshot.gpg.key | sudo gpg --dearmor -
         clang-tidy \
         gdb \
         lld
+
+USER gitpod
