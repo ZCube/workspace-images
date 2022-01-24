@@ -1,15 +1,14 @@
 ARG base
 FROM ${base}
 
-USER root
-
-ENV PGDATA="/workspace/.pgsql/data"
-RUN sudo mkdir -p $PGDATA
-
 USER gitpod
 
 # Dazzle does not rebuild a layer until one of its lines are changed. Increase this counter to rebuild this layer.
-ENV TRIGGER_REBUILD=1
+ENV TRIGGER_REBUILD=2
+ENV PGWORKSPACE="/workspace/.pgsql"
+ENV PGDATA="$PGWORKSPACE/data"
+RUN sudo mkdir -p $PGDATA
+RUN sudo chown gitpod $PGWORKSPACE -R
 
 # Install PostgreSQL
 RUN sudo install-packages postgresql-12 postgresql-contrib-12
@@ -18,7 +17,8 @@ RUN sudo install-packages postgresql-12 postgresql-contrib-12
 ENV PATH="/usr/lib/postgresql/12/bin:$PATH"
 
 RUN mkdir -p ~/.pg_ctl/bin ~/.pg_ctl/sockets \
- && printf '#!/bin/bash\n[ ! -d $PGDATA ] && initdb -D $PGDATA\npg_ctl -D $PGDATA -l ~/.pg_ctl/log -o "-k ~/.pg_ctl/sockets" start\n' > ~/.pg_ctl/bin/pg_start \
+ && initdb -D $PGDATA \
+ && printf '#!/bin/bash\npg_ctl -D $PGDATA -l ~/.pg_ctl/log -o "-k ~/.pg_ctl/sockets" start\n' > ~/.pg_ctl/bin/pg_start \
  && printf '#!/bin/bash\npg_ctl -D $PGDATA -l ~/.pg_ctl/log -o "-k ~/.pg_ctl/sockets" stop\n' > ~/.pg_ctl/bin/pg_stop \
  && chmod +x ~/.pg_ctl/bin/*
 ENV PATH="$HOME/.pg_ctl/bin:$PATH"
@@ -30,3 +30,4 @@ ENV PGDATABASE="postgres"
 # tasks from a Dockerfile. This workaround checks, on each bashrc eval, if the
 # PostgreSQL server is running, and if not starts it.
 RUN printf "\n# Auto-start PostgreSQL server.\n[[ \$(pg_ctl status | grep PID) ]] || pg_start > /dev/null\n" >> /home/gitpod/.bashrc.d/200-postgresql-launch
+RUN chmod +x /home/gitpod/.bashrc.d/200-postgresql-launch
