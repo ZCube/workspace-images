@@ -1,11 +1,19 @@
 name: Sync to Docker Hub
 
 on:
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: 'The tag to apply to the image'
-        required: true
+  schedule:
+    # Run at 0443 hrs UTC everyday. We choose such
+    # time to avoid delay in scheduling as recommended:
+    # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule
+    #
+    # The schedule event can be delayed during periods
+    # of high loads of GitHub Actions workflow runs.
+    # High load times include the start of every hour.
+    # To decrease the chance of delay, schedule your
+    # workflow to run at a different time of the hour.
+    #
+    # At 04:43 on Tuesday
+    - cron:  '43 4 * * 2'
 
 jobs:
   # Sync container images between the GCP Artifact registry and Docker Hub
@@ -67,5 +75,5 @@ jobs:
         run: |
           sudo skopeo sync \
             --src docker \
-            --dest docker \
-            ${{env.SOURCE_IMAGE_REGISTRY}}/gitpod-artifacts/docker-dev/workspace-full:$IMAGE_TAG ${{env.DEST_IMAGE_REGISTRY}}/gitpod
+            --dest yml \
+            .github/promote-images.yml ${{env.DEST_IMAGE_REGISTRY}}/gitpod
