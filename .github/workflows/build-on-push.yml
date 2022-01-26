@@ -28,7 +28,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ env.REGISTRY }}/${{ github.repository }}:base
+          images: ${{ env.REGISTRY }}/${{ github.repository }}/base
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
@@ -61,7 +61,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ env.REGISTRY }}/${{ github.repository }}:full
+          images: ${{ env.REGISTRY }}/${{ github.repository }}/full
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
@@ -94,7 +94,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ env.REGISTRY }}/${{ github.repository }}:gitpod-dev
+          images: ${{ env.REGISTRY }}/${{ github.repository }}/gitpod-dev
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
