@@ -6,6 +6,7 @@
 # gcloud auth configure-docker europe-docker.pkg.dev
 # gcloud auth login --no-launch-browser
 ARG BASE_IMAGE
+ARG BASE_TAG
 FROM ${BASE_IMAGE}/full:${BASE_TAG}
 
 ENV TRIGGER_REBUILD 16
