@@ -29,6 +29,11 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: ${{ env.REGISTRY }}/${{ github.repository }}/base
+      # https://stackoverflow.com/questions/58033366/how-to-get-the-current-branch-within-github-actions
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
@@ -41,6 +46,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build-args: |
             BASE_IMAGE=${{ env.REGISTRY }}/${{ github.repository }}
+            BASE_TAG=${{ steps.extract_branch.outputs.branch }}
 
   build-full:
     needs: build-base
@@ -66,6 +72,11 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: ${{ env.REGISTRY }}/${{ github.repository }}/full
+      # https://stackoverflow.com/questions/58033366/how-to-get-the-current-branch-within-github-actions
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
@@ -78,6 +89,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build-args: |
             BASE_IMAGE=${{ env.REGISTRY }}/${{ github.repository }}
+            BASE_TAG=${{ steps.extract_branch.outputs.branch }}
           
   build-gitpod-dev-image:
     needs: build-full
@@ -103,6 +115,11 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: ${{ env.REGISTRY }}/${{ github.repository }}/gitpod-dev
+      # https://stackoverflow.com/questions/58033366/how-to-get-the-current-branch-within-github-actions
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
@@ -115,4 +132,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build-args: |
             BASE_IMAGE=${{ env.REGISTRY }}/${{ github.repository }}
+            BASE_TAG=${{ steps.extract_branch.outputs.branch }}
 

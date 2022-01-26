@@ -1,6 +1,6 @@
 # Dazzle do not supports ARG TRIGGER_REBUILD=2
-ARG IMAGE_BASE
-FROM ${IMAGE_BASE}/base:arm64
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}/base:${BASE_TAG}
 
 RUN echo "ws full starts"
 
