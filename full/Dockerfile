@@ -1,5 +1,6 @@
 # Dazzle do not supports ARG TRIGGER_REBUILD=2
-FROM ghcr.io/zcube/workspace-images/base:arm64
+ARG IMAGE_BASE
+FROM ${IMAGE_BASE}/base:arm64
 
 RUN echo "ws full starts"
 

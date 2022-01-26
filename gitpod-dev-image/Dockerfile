@@ -5,7 +5,8 @@
 # if you want to run this image in a workspace, follow these steps:
 # gcloud auth configure-docker europe-docker.pkg.dev
 # gcloud auth login --no-launch-browser
-FROM ghcr.io/zcube/workspace-images/full:arm64
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}/full:arm64
 
 ENV TRIGGER_REBUILD 16
 
