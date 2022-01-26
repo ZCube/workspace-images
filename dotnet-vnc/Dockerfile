@@ -1,4 +1,6 @@
-FROM gitpod/workspace-full-vnc:latest
+ARG BASE_IMAGE
+ARG BASE_TAG
+FROM ${BASE_IMAGE}/full-vnc:${BASE_TAG}
 
 USER gitpod
 

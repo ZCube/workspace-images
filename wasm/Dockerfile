@@ -1,4 +1,6 @@
-FROM gitpod/workspace-full
+ARG BASE_IMAGE
+ARG BASE_TAG
+FROM ${BASE_IMAGE}/full:${BASE_TAG}
 
 RUN bash -cl "cargo install wasm-pack cargo-wasm cargo-generate \
     && curl -fsSL https://wasmtime.dev/install.sh  | bash; \

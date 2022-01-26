@@ -1,4 +1,6 @@
-FROM gitpod/workspace-full:latest
+ARG BASE_IMAGE
+ARG BASE_TAG
+FROM ${BASE_IMAGE}/full:${BASE_TAG}
 
 # Install Xvfb, JavaFX-helpers, Openbox window manager and emacs GTK
 RUN sudo install-packages xvfb x11vnc xterm openjfx libopenjfx-java openbox \

@@ -1,4 +1,6 @@
-FROM gitpod/workspace-full:latest
+ARG BASE_IMAGE
+ARG BASE_TAG
+FROM ${BASE_IMAGE}/full:${BASE_TAG}
 # Docker build does not rebuild an image when a base image is changed, increase this counter to trigger it.
 ENV TRIGGER_REBUILD=1
 # Install PostgreSQL

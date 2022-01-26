@@ -1,4 +1,6 @@
-FROM gitpod/workspace-full
+ARG BASE_IMAGE
+ARG BASE_TAG
+FROM ${BASE_IMAGE}/full:${BASE_TAG}
 
 # Install MongoDB
 # Source: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu-tarball/#install-mongodb-community-edition

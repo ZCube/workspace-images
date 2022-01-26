@@ -1,4 +1,6 @@
-FROM gitpod/workspace-full-vnc
+ARG BASE_IMAGE
+ARG BASE_TAG
+FROM ${BASE_IMAGE}/full-vnc:${BASE_TAG}
 
 # Install the latest rr.
 RUN __RR_VERSION__="5.5.0" \
