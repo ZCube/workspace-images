@@ -35,8 +35,8 @@ jobs:
           context: base
           push: true
           tags: base
-          cache-from: type=registry,ref= ${{ env.REGISTRY }}/${{ github.repository }}:buildcache-base
-          cache-to: type=registry,ref= ${{ env.REGISTRY }}/${{ github.repository }}:buildcache-base,mode=max
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ github.repository }}:buildcache-base
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ github.repository }}:buildcache-base,mode=max
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
       - name: Build and push Docker image [full]
@@ -45,7 +45,7 @@ jobs:
           context: full
           push: true
           tags: full
-          cache-from: type=registry,ref= ${{ env.REGISTRY }}/${{ github.repository }}:buildcache-full
-          cache-to: type=registry,ref= ${{ env.REGISTRY }}/${{ github.repository }}:buildcache-full,mode=max
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ github.repository }}:buildcache-full
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ github.repository }}:buildcache-full,mode=max
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
