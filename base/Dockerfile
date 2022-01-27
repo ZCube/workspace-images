@@ -1,4 +1,4 @@
-FROM buildpack-deps:impish
+FROM buildpack-deps:hirsute
 
 COPY install-packages upgrade-packages /usr/bin/
 
