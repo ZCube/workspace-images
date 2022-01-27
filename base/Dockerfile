@@ -1,4 +1,4 @@
-FROM buildpack-deps:focal
+FROM buildpack-deps:bullseye
 
 COPY install-packages upgrade-packages /usr/bin/
 
