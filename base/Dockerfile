@@ -1,4 +1,4 @@
-FROM buildpack-deps:bullseye
+FROM buildpack-deps:impish
 
 COPY install-packages upgrade-packages /usr/bin/
 
