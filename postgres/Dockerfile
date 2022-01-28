@@ -4,6 +4,9 @@ FROM ${BASE_IMAGE}/full:${BASE_TAG}
 # Docker build does not rebuild an image when a base image is changed, increase this counter to trigger it.
 ENV TRIGGER_REBUILD=1
 # Install PostgreSQL
+RUN sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+RUN sudo apt-get update
 RUN sudo install-packages postgresql-12 postgresql-contrib-12
 
 # Setup PostgreSQL server for user gitpod
