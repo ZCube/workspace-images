@@ -249,7 +249,6 @@ RUN sudo curl -fsSL -o aws-iam-authenticator "https://amazon-eks.s3.us-west-2.am
 RUN mkdir -p ~/.terraform \
     && cd ~/.terraform \
     && curl -fsSL -o terraform_linux_$(dpkg --print-architecture).zip https://releases.hashicorp.com/terraform/0.15.4/terraform_0.15.4_linux_$(dpkg --print-architecture).zip \
-RUN mkdir -p ~/.terraform \
     && unzip *.zip \
     && rm -f *.zip \
     && printf "terraform -install-autocomplete 2> /dev/null\n" >>~/.bashrc

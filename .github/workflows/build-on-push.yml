@@ -109,7 +109,7 @@ jobs:
       packages: write
     strategy:
       matrix:
-        node: [ dart, dotnet-lts, flutter, full-vnc, gecko, mdbook, mongodb, mysql, postgres, wasm ]
+        node: [ dart, dotnet-lts, flutter, full-vnc, mdbook, mongodb, mysql, postgres, wasm ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
