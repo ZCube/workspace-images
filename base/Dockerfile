@@ -1,4 +1,6 @@
-FROM buildpack-deps:hirsute
+ARG BASE_IMAGE
+ARG BASE_TAG
+FROM ${BASE_IMAGE}/buildpack-deps:${BASE_TAG}
 
 COPY install-packages upgrade-packages /usr/bin/
 
