@@ -204,7 +204,6 @@ jobs:
             BASE_TAG=${{ steps.extract_branch.outputs.branch }}
           
   build-gitpod-dev-image:
-    needs: build-full
     runs-on: ubuntu-latest
     permissions:
       contents: read
