@@ -245,7 +245,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build-args: |
             BASE_IMAGE=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}
-            BASE_TAG=${{ steps.extract_branch.outputs.branch }}-${{ matrix.tag }}
+            BASE_TAG=${{ steps.extract_branch.outputs.branch }}
           
   build-matrix-vnc:
     needs: build-matrix
