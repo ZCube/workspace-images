@@ -45,8 +45,7 @@ jobs:
           context: buildpack-deps
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/buildpack-deps:${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
           build-args: |
@@ -93,8 +92,7 @@ jobs:
           context: base
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/base:${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
           build-args: |
@@ -148,8 +146,7 @@ jobs:
           context: full
           push: true
           tags: ${{ steps.meta.outputs.tags }}-${{ matrix.tag }}
-          # cache-from: type=gha
-          # cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/full:${{ steps.meta.outputs.tags }}-${{ matrix.tag }}
           labels: ${{ steps.meta.outputs.labels }}
           # platforms: linux/amd64,linux/arm64
           build-args: |
@@ -199,8 +196,7 @@ jobs:
           context: ${{ matrix.node }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/${{ matrix.node }}:${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
           build-args: |
@@ -250,8 +246,7 @@ jobs:
           context: ${{ matrix.node }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/${{ matrix.node }}:${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
           build-args: |
@@ -305,8 +300,7 @@ jobs:
           context: gitpod-dev-image
           push: true
           tags: ${{ steps.meta.outputs.tags }}-${{ matrix.tag }}
-          # cache-from: type=gha
-          # cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/gitpod-dev-image:${{ steps.meta.outputs.tags }}-${{ matrix.tag }}
           labels: ${{ steps.meta.outputs.labels }}
           # platforms: linux/amd64,linux/arm64
           build-args: |
