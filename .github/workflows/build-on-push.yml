@@ -46,6 +46,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/buildpack-deps:${{ steps.meta.outputs.tags }}
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/buildpack-deps:${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
           build-args: |
@@ -93,6 +94,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/base:${{ steps.meta.outputs.tags }}
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/base:${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
           build-args: |
@@ -147,6 +149,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}-${{ matrix.tag }}
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/full:${{ steps.meta.outputs.tags }}-${{ matrix.tag }}
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/full:${{ steps.meta.outputs.tags }}-${{ matrix.tag }}
           labels: ${{ steps.meta.outputs.labels }}
           # platforms: linux/amd64,linux/arm64
           build-args: |
@@ -197,6 +200,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/${{ matrix.node }}:${{ steps.meta.outputs.tags }}
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/${{ matrix.node }}:${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
           build-args: |
@@ -247,6 +251,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/${{ matrix.node }}:${{ steps.meta.outputs.tags }}
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/${{ matrix.node }}:${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
           build-args: |
@@ -301,6 +306,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}-${{ matrix.tag }}
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/gitpod-dev-image:${{ steps.meta.outputs.tags }}-${{ matrix.tag }}
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/gitpod-dev-image:${{ steps.meta.outputs.tags }}-${{ matrix.tag }}
           labels: ${{ steps.meta.outputs.labels }}
           # platforms: linux/amd64,linux/arm64
           build-args: |
