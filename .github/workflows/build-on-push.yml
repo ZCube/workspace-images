@@ -3,7 +3,7 @@ on: [push]
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: opendocs
+  OS_BASE: focal
 
 jobs:
   build-deps:
@@ -45,8 +45,8 @@ jobs:
           context: buildpack-deps
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=registry,ref=${{ steps.meta.outputs.tags }}-cache
-          cache-to: type=registry,ref=${{ steps.meta.outputs.tags }}-cache
+          cache-from: type=registry,ref=${{ steps.meta.outputs.tags }}-cache-${{ env.OS_BASE }}
+          cache-to: type=registry,ref=${{ steps.meta.outputs.tags }}-cache-${{ env.OS_BASE }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
           build-args: |
@@ -93,8 +93,8 @@ jobs:
           context: base
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=registry,ref=${{ steps.meta.outputs.tags }}-cache
-          cache-to: type=registry,ref=${{ steps.meta.outputs.tags }}-cache
+          cache-from: type=registry,ref=${{ steps.meta.outputs.tags }}-cache-${{ env.OS_BASE }}
+          cache-to: type=registry,ref=${{ steps.meta.outputs.tags }}-cache-${{ env.OS_BASE }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
           build-args: |
@@ -148,8 +148,8 @@ jobs:
           context: full
           push: true
           tags: ${{ steps.meta.outputs.tags }}-${{ matrix.tag }}
-          cache-from: type=registry,ref=${{ steps.meta.outputs.tags }}-cache-${{ matrix.tag }}
-          cache-to: type=registry,ref=${{ steps.meta.outputs.tags }}-cache-${{ matrix.tag }}
+          cache-from: type=registry,ref=${{ steps.meta.outputs.tags }}-cache-${{ env.OS_BASE }}-${{ matrix.tag }}
+          cache-to: type=registry,ref=${{ steps.meta.outputs.tags }}-cache-${{ env.OS_BASE }}-${{ matrix.tag }}
           labels: ${{ steps.meta.outputs.labels }}
           # platforms: linux/amd64,linux/arm64
           build-args: |
@@ -199,8 +199,8 @@ jobs:
           context: ${{ matrix.node }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=registry,ref=${{ steps.meta.outputs.tags }}-cache
-          cache-to: type=registry,ref=${{ steps.meta.outputs.tags }}-cache
+          cache-from: type=registry,ref=${{ steps.meta.outputs.tags }}-cache-${{ env.OS_BASE }}
+          cache-to: type=registry,ref=${{ steps.meta.outputs.tags }}-cache-${{ env.OS_BASE }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
           build-args: |
@@ -250,8 +250,8 @@ jobs:
           context: ${{ matrix.node }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=registry,ref=${{ steps.meta.outputs.tags }}-cache
-          cache-to: type=registry,ref=${{ steps.meta.outputs.tags }}-cache
+          cache-from: type=registry,ref=${{ steps.meta.outputs.tags }}-cache-${{ env.OS_BASE }}
+          cache-to: type=registry,ref=${{ steps.meta.outputs.tags }}-cache-${{ env.OS_BASE }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
           build-args: |
@@ -305,8 +305,8 @@ jobs:
           context: gitpod-dev-image
           push: true
           tags: ${{ steps.meta.outputs.tags }}-${{ matrix.tag }}
-          cache-from: type=registry,ref=${{ steps.meta.outputs.tags }}-cache-${{ matrix.tag }}
-          cache-to: type=registry,ref=${{ steps.meta.outputs.tags }}-cache-${{ matrix.tag }}
+          cache-from: type=registry,ref=${{ steps.meta.outputs.tags }}-cache-${{ env.OS_BASE }}-${{ matrix.tag }}
+          cache-to: type=registry,ref=${{ steps.meta.outputs.tags }}-cache-${{ env.OS_BASE }}-${{ matrix.tag }}
           labels: ${{ steps.meta.outputs.labels }}
           # platforms: linux/amd64,linux/arm64
           build-args: |
