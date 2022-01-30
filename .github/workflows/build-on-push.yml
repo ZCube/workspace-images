@@ -110,7 +110,7 @@ jobs:
            tag: "amd64"
          - node: "ARM64"
            tag: "arm64"
-    runs-on: ${{ env.node }}
+    runs-on: ${{ matrix.node }}
     permissions:
       contents: read
       packages: write
@@ -266,7 +266,7 @@ jobs:
            tag: "amd64"
          - node: "ARM64"
            tag: "arm64"
-    runs-on: ${{ env.node }}
+    runs-on: ${{ matrix.node }}
     needs: build-full
     permissions:
       contents: read
