@@ -392,5 +392,5 @@ jobs:
       - name: Create manifest
         shell: bash
         run: |
-          docker manifest create ${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/gitpod-dev-image:${{ steps.extract_branch.outputs.branch }} --amend ${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/full:${{ steps.extract_branch.outputs.branch }}-arm64 --amend ${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/full:${{ steps.extract_branch.outputs.branch }}-amd64
-          docker manifest push ${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/gitpod-dev-image:${{ steps.extract_branch.outputs.branch }}
+          docker manifest create ${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/gitpod-dev:${{ steps.extract_branch.outputs.branch }} --amend ${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/gitpod-dev:${{ steps.extract_branch.outputs.branch }}-arm64 --amend ${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/gitpod-dev:${{ steps.extract_branch.outputs.branch }}-amd64
+          docker manifest push ${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/gitpod-dev:${{ steps.extract_branch.outputs.branch }}
