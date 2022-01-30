@@ -204,7 +204,8 @@ jobs:
       packages: write
     strategy:
       matrix:
-        node: [ dart, dotnet-lts, flutter, full-vnc, mdbook, mongodb, mysql, postgres, wasm ]
+        # node: [ dart, dotnet-lts, flutter, full-vnc, mdbook, mongodb, mysql, postgres, wasm ]
+        node: [ full-vnc ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -255,7 +256,8 @@ jobs:
       packages: write
     strategy:
       matrix:
-        node: [ dotnet-lts-vnc, dotnet-vnc, flutter, full-vnc, gecko ]
+        # node: [ dotnet-lts-vnc, dotnet-vnc, flutter, full-vnc, gecko ]
+        node: [ full-vnc ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
