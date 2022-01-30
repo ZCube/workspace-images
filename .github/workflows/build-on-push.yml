@@ -193,7 +193,7 @@ jobs:
       - name: Create manifest
         shell: bash
         run: |
-          docker manifest create ${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/full --amend ${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/full:${{ steps.extract_branch.outputs.branch }}-arm64 --amend ${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/full:${{ steps.extract_branch.outputs.branch }}-amd64
+          docker manifest create ${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/full:${{ steps.extract_branch.outputs.branch }} --amend ${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/full:${{ steps.extract_branch.outputs.branch }}-arm64 --amend ${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/full:${{ steps.extract_branch.outputs.branch }}-amd64
           docker manifest push ${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}/full:${{ steps.extract_branch.outputs.branch }}
 
   build-matrix:
@@ -307,7 +307,7 @@ jobs:
          - node: "ARM64"
            tag: "arm64"
     runs-on: ${{ matrix.node }}
-    needs: build-full
+    needs: build-full-manifest
     permissions:
       contents: read
       packages: write
@@ -351,5 +351,5 @@ jobs:
           # platforms: linux/amd64,linux/arm64
           build-args: |
             BASE_IMAGE=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}
-            BASE_TAG=${{ steps.extract_branch.outputs.branch }}-${{ matrix.tag }}
+            BASE_TAG=${{ steps.extract_branch.outputs.branch }}
 
