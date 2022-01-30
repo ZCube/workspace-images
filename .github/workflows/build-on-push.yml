@@ -55,7 +55,7 @@ jobs:
 
   build-base:
     runs-on: ubuntu-latest
-    needs: build-deps
+    # needs: build-deps
     permissions:
       contents: read
       packages: write
@@ -98,22 +98,29 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
           build-args: |
-            BASE_IMAGE=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}
-            BASE_TAG=${{ steps.extract_branch.outputs.branch }}
+            BASE_IMAGE=docker.io
+            BASE_TAG=focal
 
   build-full:
     needs: build-base
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+         - node: "ubuntu-latest"
+           tag: "amd64"
+         - node: "ARM64"
+           tag: "arm64"
+    runs-on: ${{ env.node }}
     permissions:
       contents: read
       packages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set up QEMU dependency
-        uses: docker/setup-qemu-action@v1
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+      # - name: Set up QEMU dependency
+      #   uses: docker/setup-qemu-action@v1
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v1
       - name: Log in to the container registry
         uses: docker/login-action@v1
         with:
@@ -140,17 +147,17 @@ jobs:
         with:
           context: full
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}-${{ env.tag }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64,linux/arm64
+          # platforms: linux/amd64,linux/arm64
           build-args: |
             BASE_IMAGE=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}
             BASE_TAG=${{ steps.extract_branch.outputs.branch }}
 
   build-matrix:
-    needs: build-base
+    needs: build-full
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -198,7 +205,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build-args: |
             BASE_IMAGE=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}
-            BASE_TAG=${{ steps.extract_branch.outputs.branch }}
+            BASE_TAG=${{ steps.extract_branch.outputs.branch }}-${{ env.tag }}
           
   build-matrix-vnc:
     needs: build-matrix
@@ -252,18 +259,25 @@ jobs:
             BASE_TAG=${{ steps.extract_branch.outputs.branch }}
           
   build-gitpod-dev-image:
-    runs-on: ubuntu-latest
-    needs: build-base
+    strategy:
+      matrix:
+        include:
+         - node: "ubuntu-latest"
+           tag: "amd64"
+         - node: "ARM64"
+           tag: "arm64"
+    runs-on: ${{ env.node }}
+    needs: build-full
     permissions:
       contents: read
       packages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set up QEMU dependency
-        uses: docker/setup-qemu-action@v1
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+      # - name: Set up QEMU dependency
+      #   uses: docker/setup-qemu-action@v1
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v1
       - name: Log in to the container registry
         uses: docker/login-action@v1
         with:
@@ -294,8 +308,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64,linux/arm64
+          # platforms: linux/amd64,linux/arm64
           build-args: |
             BASE_IMAGE=${{ env.REGISTRY }}/${{ steps.string.outputs.lowercase }}
-            BASE_TAG=${{ steps.extract_branch.outputs.branch }}
+            BASE_TAG=${{ steps.extract_branch.outputs.branch }}-${{ env.tag }}
 
