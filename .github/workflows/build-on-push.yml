@@ -148,8 +148,8 @@ jobs:
           context: full
           push: true
           tags: ${{ steps.meta.outputs.tags }}-${{ matrix.tag }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          # cache-from: type=gha
+          # cache-to: type=gha,mode=max
           labels: ${{ steps.meta.outputs.labels }}
           # platforms: linux/amd64,linux/arm64
           build-args: |
@@ -305,8 +305,8 @@ jobs:
           context: gitpod-dev-image
           push: true
           tags: ${{ steps.meta.outputs.tags }}-${{ matrix.tag }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          # cache-from: type=gha
+          # cache-to: type=gha,mode=max
           labels: ${{ steps.meta.outputs.labels }}
           # platforms: linux/amd64,linux/arm64
           build-args: |
