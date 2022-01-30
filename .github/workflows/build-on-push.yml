@@ -256,8 +256,8 @@ jobs:
       packages: write
     strategy:
       matrix:
-        # node: [ dotnet-lts-vnc, dotnet-vnc, flutter, full-vnc, gecko ]
-        node: [ full-vnc ]
+        # node: [ dotnet-lts-vnc, dotnet-vnc, flutter, gecko ]
+        node: [ ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
